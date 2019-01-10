@@ -91,7 +91,10 @@ def train(model, supervisor, num_label):
 
 
 def evaluation(model, supervisor, num_label):
+    n_subset = 5000
     teX, teY, num_te_batch = load_data(cfg.dataset, cfg.batch_size, is_training=False)
+    teX = teX[0:n_subset]
+    teY = teY[0:n_subset]
     fd_test_acc = save_to()
     with supervisor.managed_session(config=tf.ConfigProto(allow_soft_placement=True)) as sess:
         supervisor.saver.restore(sess, tf.train.latest_checkpoint(cfg.logdir))
